@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # A Movie Plex Apps
     'movie',
     'theater',
+    'frontend',
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Media files (Uploaded Images, Docs)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
