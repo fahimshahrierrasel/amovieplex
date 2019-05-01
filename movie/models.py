@@ -35,6 +35,17 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
 
+    def get_genres(self):
+        movie_genres = self.genres.all()
+        genres = movie_genres[0].title
+        for genre in movie_genres[1:]:
+            genres = genres + ', ' + genre.title
+        return genres
+
+    def get_feature_image(self):
+        feature_image = MovieMedia.objects.filter(movie=self).first()
+        return feature_image
+
 
 class MovieMedia(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -43,7 +54,7 @@ class MovieMedia(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.movie.title
+        return self.image.url
 
 
 class Comment(models.Model):

@@ -1,0 +1,96 @@
+.margin-20 {
+    margin: 20px;
+}
+
+.glide__slide {
+    margin-bottom: 1px;
+}
+
+.tab-inactive {
+    display: none;
+}
+
+span.movie-tag {
+    color: #ec7532;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase
+}
+
+h3.no-underline {
+    padding: 0;
+    border-bottom: none;
+}
+
+.viewing-times {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    margin-right: 10px;
+}
+
+.past {
+    opacity: 0.5;
+}
+
+.movie-rating {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 48px;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin-left: 5px;
+    text-align: center;
+    letter-spacing: 0;
+    color: #fff;
+    border-radius: 50%;
+    background: #4a4a4a;
+}
+
+.coming-soon {
+    height: 400px;
+}
+
+.copyright {
+    margin: 10px;
+}
+
+.footer {
+    padding-bottom: 20px;
+    background-color: #4a4a4a;
+    color: white;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.fontawesome { transition: all .2s ease-in-out; }
+
+.fontawesome:hover{
+    transform: scale(1.1);
+}
+
+
+.newin-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+}
+
+.newin:hover .newin-overlay {
+    opacity: 1;
+}

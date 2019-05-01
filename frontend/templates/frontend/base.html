@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MoviePlex</title>
+    <!-- Styles Start -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.core.css' %} />
+    <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.theme.css' %} />
+    <link rel="stylesheet" href={% static 'frontend/css/style.css' %}>
+    <!-- Styles End -->
+</head>
+
+<body>
+    <!-- Header hero start -->
+    <section class="hero is-medium" id="hero">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar is-transparent is-fixed-top" id="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item">
+                            <span class="has-text-white">MoviePlex</span>
+                        </a>
+                        <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item is-active has-text-white">
+                                Home
+                            </a>
+                            <a class="navbar-item has-text-white" href="./whatson.html">
+                                What's On
+                            </a>
+                            <a class="navbar-item has-text-white">
+                                Documentation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            {% block hero_body %}
+            {% endblock %}
+        </div>
+    </section>
+    <!-- Header hero end -->
+    {% block content %}
+    {% endblock %}
+    <!-- Helper text start -->
+    <section class="section">
+        <div class="container has-text-centered">
+            <h1 class="title">Need help? Contact our support team on</h1>
+            <h2 class="is-size-1 has-text-weight-bold">
+                01554070646
+            </h2>
+        </div>
+    </section>
+    <!-- Helper text end -->
+    <!-- Footer start -->
+    <footer class="footer">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h2>GET IN TOUCH</h2>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Give us feedback</a></li>
+                        <li><a href="#">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2>ABOUT MOVIE STAR</h2>
+                    <ul>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Find us</a></li>
+                        <li><a href="#">Schedule</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2>LEGAL STUFF</h2>
+                    <ul>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Cookie policy</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2>CONTACT WITH US</h2>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i> Google +</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">2017 © Movie Star</p>
+        </div>
+    </footer>
+    <!-- Footer end -->
+    <!-- Scripts Start -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script type="text/javascript" src={% static 'frontend/vendor/glide/js/glide.js' %}></script>
+    <script type="text/javascript" src={% static 'frontend/js/main.js' %}></script>
+    <script type="text/javascript" src={% static 'frontend/js/slider.js' %}></script>
+    <!-- Scripts end -->
+</body>
+
+</html>
