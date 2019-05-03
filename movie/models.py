@@ -21,9 +21,9 @@ class Rating(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
-    short_plot = models.CharField(max_length=150)
-    plot = models.CharField(max_length=500)
-    director = models.CharField(max_length=50)
+    short_plot = models.CharField(max_length=300)
+    plot = models.TextField()
+    director = models.CharField(max_length=200)
     starring = models.CharField(max_length=200)
     release_date = models.DateField(blank=True, null=True)
     running_time = models.IntegerField(blank=True, null=True)
@@ -51,10 +51,19 @@ class Movie(models.Model):
         return slugify(self.title)
 
 
+class MediaType(models.Model):
+    type = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.type
+
+
 class MovieMedia(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="movie_images/", blank=True, null=True)
     video_url = models.URLField(blank=True, null=True)
+    media_type = models.ForeignKey(
+        MediaType, null=True, on_delete=models.SET_NULL)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
