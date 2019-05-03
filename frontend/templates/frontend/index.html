@@ -55,7 +55,7 @@
                                     <div class="has-text-centered center">
                                         <i class="far fa-3x fa-play-circle fontawesome"></i>
                                         </br>
-                                        <a href="#">Read More</a>
+                                        <a href="{% url 'single_movie' slug=new.get_slug %}">Read More</a>
                                         </br>
                                         <span>Release Date:</span><span>{{ new.release_date }}</span>
                                     </div>

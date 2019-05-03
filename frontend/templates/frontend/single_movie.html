@@ -1,0 +1,114 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block hero_body %}
+<div class="hero-body" style="background-image: url({{movie.get_feature_image}});">
+    <div class="container has-text-white">
+        <div class="columns">
+            <div class="column is-7">
+                <span class="movie-tag" id="coming-soon-tag">{{ movie.get_genres }}</span></br>
+                <span class="title  has-text-white" id="coming-soon-name">{{ movie.title }}</span>
+                <p id="coming-soon-details">{{ movie.short_plot }}</p>
+                <div class="columns" style="margin-top: 5px;">
+                    <div class="column is-narrow">
+                        <span class="movie-rating">{{ movie.rating.title }}</span>
+                    </div>
+                    <div class="column is-narrow">
+                        <a class="button is-rounded is-success is-outlined is-medium">
+                            <span class="icon is-medium">
+                                <i class="fas fa-play"></i>
+                            </span>
+                            <span>Trailer</span>
+                        </a>
+                    </div>
+                    <div class="column"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8">
+                <div class="tabs is-large">
+                    <ul>
+                        <li class="is-active"><a>SYNOPSIS</a></li>
+                    </ul>
+                </div>
+                <div class="tabs-details">
+                    <div class="columns">
+                        <div class="column is-5">
+                            <figure class="image is-4by3">
+                                <img src="{{ movie.get_feature_image }}" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <p>{{ movie.short_plot }}... <a href="#">Read More</a></p>
+                            </br>
+                            <ul>
+                                <li><strong>DIRECTOR</strong> {{ movie.director }}</li>
+                                <li><strong>STARRING</strong> {{ movie.starring }}</li>
+                                <li><strong>RELEASE</strong> {{ movie.release_date }}</li>
+                                <li><strong>RUNNING</strong> {{ movie.running_time }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="tabs is-large">
+                    <ul>
+                        <li class="is-active"><a>VIEWING TIMES</a></li>
+                    </ul>
+                </div>
+                <div class="tabs-details">
+                    <div class="tags">
+                        <span class="viewing-times"> Sunday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                    <div class="tags">
+                        <span class="viewing-times"> Monday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                    <div class="tags">
+                        <span class="viewing-times"> Tuesday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                    <div class="tags">
+                        <span class="viewing-times"> Wednesday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                    <div class="tags">
+                        <span class="viewing-times"> Thursday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                    <div class="tags">
+                        <span class="viewing-times"> Friday </span>
+                        <span class="tag">14:45</span>
+                        <span class="tag">18:30</span>
+                        <span class="tag">20:30</span>
+                        <span class="tag">23:40</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

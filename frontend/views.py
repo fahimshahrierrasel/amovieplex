@@ -22,3 +22,16 @@ class IndexView(TemplateView):
         context['running_shows'] = running_shows
         context['up_comming_movies'] = all_movies
         return context
+
+
+class SingleMovie(TemplateView):
+    template_name = 'frontend/single_movie.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SingleMovie, self).get_context_data(**kwargs)
+        movies = Movie.objects.all()
+        for movie in movies:
+            if self.kwargs['slug'] == movie.get_slug():
+                context['movie'] = movie
+                break
+        return context

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
@@ -45,6 +46,9 @@ class Movie(models.Model):
     def get_feature_image(self):
         feature_image = MovieMedia.objects.filter(movie=self).first()
         return feature_image
+
+    def get_slug(self):
+        return slugify(self.title)
 
 
 class MovieMedia(models.Model):
