@@ -36,8 +36,12 @@ newInGlide.mount()
 // New In Carousel Initialization end
 
 // Coming soon carousel
-new Glide('.comming-soon-slider', {
+let commingSoonSlider = new Glide('.comming-soon-slider', {
     type: 'carousel',
     startAt: 0,
-    perView: 5
+    perView: 5,
+    peek: {
+        before: 100,
+        after: 100
+    }
 }).mount();

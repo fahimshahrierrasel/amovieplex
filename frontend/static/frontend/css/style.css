@@ -78,6 +78,15 @@ h3.no-underline {
     transform: scale(1.1);
 }
 
+
+.comming-soon-poster{
+    height: 250px;
+}
+
+.comming-soon-poster img {
+    height: 250px;
+}
+
 .newin{
     height: 245px;
 }

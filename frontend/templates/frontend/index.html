@@ -6,12 +6,12 @@
         <ul class="glide__slides">
             {% for movie in movies %}
             <li class="glide__slide">
-                <div class="section" style="background-image: url({{ movie.get_feature_image }}); height: 600px;">
+                <div class="section" style="background-image: url({{ movie.get_feature_image }}); background-repeat:no-repeat; background-size:cover; height: 600px;">
                     <div class="content" style="margin: 80px; width: 50%;">
                         <span class="movie-tag" id="coming-soon-tag">{{ movie.get_genres }}</span></br>
                         <span class="title" id="coming-soon-name">{{ movie.title }}</span>
                         <p id="coming-soon-details">{{ movie.short_plot }}</p>
-                        <p><a id="coming-soon-link" href="#">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
+                        <p><a id="coming-soon-link" href="{% url 'single_movie' slug=movie.get_slug %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
                     </div>
                 </div>
             </li>
@@ -95,7 +95,7 @@
                                 <span class="movie-tag">{{ movie.get_genres }}</span></br>
                                 <span class="title">{{ movie.title }}</span>
                                 <p>{{ movie.short_plot }}</p>
-                                <p><a href="#">FULL SYNOPSIS <i class="fas fa-chevron-right"></i></a></p>
+                                <p><a href="{% url 'single_movie' slug=movie.get_slug %}">FULL SYNOPSIS <i class="fas fa-chevron-right"></i></a></p>
                                 <div class="columns">
                                     <div class="column is-10">
                                         <div class="tags are-medium">
@@ -136,7 +136,7 @@
                             <span class="movie-tag" id="coming_soon_tag">{{ first_movie.get_genres }}</span></br>
                             <span class="title has-text-white" id="coming_soon_name">{{ first_movie.title }}</span>
                             <p id="coming_soon_details">{{ first_movie.short_plot }}</p>
-                            <p><a id="coming_soon_link" href="#">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
+                            <p><a id="coming_soon_link" href="{% url 'single_movie' slug=first_movie.get_slug %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
                         </div>
                     </div>
                     <div class="column">
@@ -150,16 +150,11 @@
                     <ul class="glide__slides">
                         {% for movie in up_comming_movies %}
                         <li class="glide__slide">
-                            <div class="card" id="what" onclick="showComingSoonDeatils(this)" data-tag='{{ movie.get_genres }}' data-title='{{ movie.title }}' data-plot='{{ movie.short_plot|escape }}' data-link='link1' data-img='{{ movie.get_feature_image }}'>
+                            <div class="card comming-soon-poster" id="what" onclick="showComingSoonDeatils(this)" data-tag='{{ movie.get_genres }}' data-title='{{ movie.title }}' data-plot='{{ movie.short_plot|escape }}' data-link="{% url 'single_movie' slug=movie.get_slug %}" data-img='{{ movie.get_feature_image }}'>
                                 <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <img src="{{ movie.get_poster_image }}" alt="Placeholder image">
+                                    <figure class="image">
+                                        <img class="background-size:cover;" src="{{ movie.get_poster_image }}" alt="Placeholder image">
                                     </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="content has-text-centered">
-                                        {{ movie.title }}
-                                    </div>
                                 </div>
                             </div>
                         </li>
