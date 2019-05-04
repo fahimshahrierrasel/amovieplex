@@ -53,3 +53,9 @@ function showComingSoonDeatils(item) {
 }
 // Show coming soon movie details end
 
+// Change General Image Start
+function changeGeneralImage(item) {
+    document.getElementById('image_container').style.backgroundImage = `url(${item.getAttribute('data-img')})`;
+}
+// Change General Image End
+

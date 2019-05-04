@@ -7,9 +7,6 @@ new Glide('.glide', {
 }).mount()
 
 // New In Carousel Initialization start
-var before = document.querySelector('#options-peek-before')
-var after = document.querySelector('#options-peek-after')
-
 var newInGlide = new Glide('.slider', {
     type: 'carousel',
     startAt: 0,
@@ -28,6 +25,9 @@ function peek() {
         }
     })
 }
+
+var before = document.querySelector('#options-peek-before')
+var after = document.querySelector('#options-peek-after')
 
 before.addEventListener('input', peek)
 after.addEventListener('input', peek)

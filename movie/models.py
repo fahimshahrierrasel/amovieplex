@@ -55,6 +55,12 @@ class Movie(models.Model):
             movie=self, media_type=media_type).first()
         return poster
 
+    def get_general_images(self):
+        media_type = MediaType.objects.filter(type='General').first()
+        images = MovieMedia.objects.filter(
+            movie=self, media_type=media_type)
+        return images
+
     def get_slug(self):
         return slugify(self.title)
 

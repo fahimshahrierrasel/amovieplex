@@ -1,7 +1,7 @@
 {% extends 'frontend/base.html' %}
 {% load static %}
 {% block hero_body %}
-<div class="hero-body" style="background-image: url({{movie.get_feature_image}});">
+<div class="hero-body" style="background-image: url({{movie.get_feature_image}}); background-repeat:no-repeat; background-size:cover;">
     <div class="container has-text-white">
         <div class="columns">
             <div class="column is-7">
@@ -39,20 +39,34 @@
                 </div>
                 <div class="tabs-details">
                     <div class="columns">
-                        <div class="column is-5">
-                            <figure class="image is-4by3">
-                                <img src="{{ movie.get_feature_image }}" alt="Placeholder image">
+                        <div class="column is-3">
+                            <figure class="image">
+                                <img src="{{ movie.get_poster_image }}" alt="Placeholder image">
                             </figure>
                         </div>
                         <div class="column">
-                            <p>{{ movie.short_plot }}... <a href="#">Read More</a></p>
+                            <p>{{ movie.short_plot }}... <a id="read_plot">Read More</a></p>
                             </br>
-                            <ul>
-                                <li><strong>DIRECTOR</strong> {{ movie.director }}</li>
-                                <li><strong>STARRING</strong> {{ movie.starring }}</li>
-                                <li><strong>RELEASE</strong> {{ movie.release_date }}</li>
-                                <li><strong>RUNNING</strong> {{ movie.running_time }}</li>
-                            </ul>
+                            <table class="table is-completely-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td style="margin-right: 10px;"><strong>DIRECTOR</strong></td>
+                                        <td>{{ movie.director }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>STARRING</strong></td>
+                                        <td>{{ movie.starring }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RELEASE</strong></td>
+                                        <td>{{ movie.release_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RUNNING</strong></td>
+                                        <td>{{ movie.running_time }} minutes</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -64,51 +78,145 @@
                     </ul>
                 </div>
                 <div class="tabs-details">
-                    <div class="tags">
-                        <span class="viewing-times"> Sunday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
-                    <div class="tags">
-                        <span class="viewing-times"> Monday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
-                    <div class="tags">
-                        <span class="viewing-times"> Tuesday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
-                    <div class="tags">
-                        <span class="viewing-times"> Wednesday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
-                    <div class="tags">
-                        <span class="viewing-times"> Thursday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
-                    <div class="tags">
-                        <span class="viewing-times"> Friday </span>
-                        <span class="tag">14:45</span>
-                        <span class="tag">18:30</span>
-                        <span class="tag">20:30</span>
-                        <span class="tag">23:40</span>
-                    </div>
+                    <table class="table is-narrow is-completely-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="has-margin-right-5">Sunday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                                <td><span class="tag">20:30</span></td>
+                                <td><span class="tag">23:40</span></td>
+                            </tr>
+                            <tr>
+                                <td>Monday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                                <td><span class="tag">20:30</span></td>
+                                <td><span class="tag">23:40</span></td>
+                            </tr>
+                            <tr>
+                                <td>Tuesday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                                <td><span class="tag">23:40</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wednesday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                            </tr>
+                            <tr>
+                                <td>Thursday</td>
+                                <td><span class="tag">14:45</span></td>
+                            </tr>
+                            <tr>
+                                <td>Friday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                                <td><span class="tag">20:30</span></td>
+                                <td><span class="tag">23:40</span></td>
+                            </tr>
+                            <tr>
+                                <td>Saturday</td>
+                                <td><span class="tag">14:45</span></td>
+                                <td><span class="tag">18:30</span></td>
+                                <td><span class="tag">20:30</span></td>
+                                <td><span class="tag">23:40</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<section class="section has-background-dark">
+    <div class="container">
+        {% with movie.get_general_images|first as first_image %}
+        <div id="image_container" style="margin-bottom: 10px; background-image: url({{ first_image }}); height: 600px; background-size:cover;">
+        </div>
+        {% endwith %}
+        <div class="glide general">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    {% for image in movie.get_general_images %}
+                    <li class="glide__slide">
+                        <div class="card" onclick="changeGeneralImage(this)" data-img="{{ image }}">
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img style="object-fit: cover; height: 165px; width: 165px;" src="{{ image }}" alt="{{ movie.title }}">
+                                </figure>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+                <button id="options-peek-before" class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+                <button id="options-peek-after" class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Movie Plot</p>
+            <button class="delete" aria-label="close" onclick="closeModal()"></button>
+        </header>
+        <section class="modal-card-body">
+            {{ movie.plot }}
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" onclick="closeModal()">Close</button>
+        </footer>
+    </div>
+</div>
+
+{% endblock %}
+{% block extraScript %}
+<script type="text/javascript">
+// General Image Carousel Start
+let generalImageSlider = new Glide('.general', {
+    type: 'carousel',
+    startAt: 0,
+    perView: 6,
+    peek: {
+        before: 100,
+        after: 100
+    }
+});
+
+function peek() {
+    generalImageSlider.update({
+        peek: {
+            before: 100,
+            after: 100
+        }
+    });
+}
+
+var before = document.querySelector('#options-peek-before');
+var after = document.querySelector('#options-peek-after');
+
+before.addEventListener('input', peek);
+after.addEventListener('input', peek);
+
+generalImageSlider.mount();
+// General Image Carousel End
+
+// Plot Modal Click Handlers Start
+
+document.getElementById('read_plot').addEventListener('click', function() {
+    document.getElementsByClassName('modal')[0].className += ' is-active';
+});
+
+function closeModal() {
+    let modal = document.getElementsByClassName('modal')[0];
+    modal.className = modal.className.replace(' is-active', '');
+}
+// Plot Modal Click Handlers Stop
+</script>
 {% endblock %}

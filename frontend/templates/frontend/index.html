@@ -153,7 +153,7 @@
                             <div class="card comming-soon-poster" id="what" onclick="showComingSoonDeatils(this)" data-tag='{{ movie.get_genres }}' data-title='{{ movie.title }}' data-plot='{{ movie.short_plot|escape }}' data-link="{% url 'single_movie' slug=movie.get_slug %}" data-img='{{ movie.get_feature_image }}'>
                                 <div class="card-image">
                                     <figure class="image">
-                                        <img class="background-size:cover;" src="{{ movie.get_poster_image }}" alt="Placeholder image">
+                                        <img style="background-size:cover;" src="{{ movie.get_poster_image }}" alt="Placeholder image">
                                     </figure>
                                 </div>
                             </div>
@@ -171,3 +171,6 @@
 </section>
 <!-- Coming soon end -->
 {% endblock %}
+{% block extraScript %}
+<script type="text/javascript" src={% static 'frontend/js/slider.js' %}></script>
+{% endblock extraScript %}
