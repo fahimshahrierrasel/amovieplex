@@ -44,8 +44,16 @@ class Movie(models.Model):
         return genres
 
     def get_feature_image(self):
-        feature_image = MovieMedia.objects.filter(movie=self).first()
+        media_type = MediaType.objects.filter(type='Feature').first()
+        feature_image = MovieMedia.objects.filter(
+            movie=self, media_type=media_type).first()
         return feature_image
+
+    def get_poster_image(self):
+        media_type = MediaType.objects.filter(type='Poster').first()
+        poster = MovieMedia.objects.filter(
+            movie=self, media_type=media_type).first()
+        return poster
 
     def get_slug(self):
         return slugify(self.title)

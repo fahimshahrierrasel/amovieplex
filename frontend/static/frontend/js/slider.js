@@ -13,7 +13,7 @@ var after = document.querySelector('#options-peek-after')
 var newInGlide = new Glide('.slider', {
     type: 'carousel',
     startAt: 0,
-    perView: 3,
+    perView: 5,
     peek: {
         before: 100,
         after: 100
