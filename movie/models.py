@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.apps import apps
 
 
 class Genre(models.Model):
@@ -60,6 +61,11 @@ class Movie(models.Model):
         images = MovieMedia.objects.filter(
             movie=self, media_type=media_type)
         return images
+
+    def get_show_times(self):
+        ShowTime = apps.get_model('theater', 'ShowTime')
+        show_times = ShowTime.objects.filter(movie=self)
+        return show_times
 
     def get_slug(self):
         return slugify(self.title)

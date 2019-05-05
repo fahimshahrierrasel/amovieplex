@@ -80,49 +80,14 @@
                 <div class="tabs-details">
                     <table class="table is-narrow is-completely-borderless">
                         <tbody>
+                            {% for show_time in movie.get_show_times %}
                             <tr>
-                                <td class="has-margin-right-5">Sunday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                                <td><span class="tag">20:30</span></td>
-                                <td><span class="tag">23:40</span></td>
+                                <td class="has-margin-right-5">{{ show_time.screen_day }}</td>
+                                {% for movietime in show_time.screen_times.all %}
+                                    <td><span class="tag">{{ movietime.start_time|time:'H:i' }}</span></td>
+                                {% endfor %}
                             </tr>
-                            <tr>
-                                <td>Monday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                                <td><span class="tag">20:30</span></td>
-                                <td><span class="tag">23:40</span></td>
-                            </tr>
-                            <tr>
-                                <td>Tuesday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                                <td><span class="tag">23:40</span></td>
-                            </tr>
-                            <tr>
-                                <td>Wednesday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                            </tr>
-                            <tr>
-                                <td>Thursday</td>
-                                <td><span class="tag">14:45</span></td>
-                            </tr>
-                            <tr>
-                                <td>Friday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                                <td><span class="tag">20:30</span></td>
-                                <td><span class="tag">23:40</span></td>
-                            </tr>
-                            <tr>
-                                <td>Saturday</td>
-                                <td><span class="tag">14:45</span></td>
-                                <td><span class="tag">18:30</span></td>
-                                <td><span class="tag">20:30</span></td>
-                                <td><span class="tag">23:40</span></td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
