@@ -67,6 +67,10 @@ class Movie(models.Model):
         show_times = ShowTime.objects.filter(movie=self)
         return show_times
 
+    def get_comments(self):
+        comments = Comment.objects.filter(movie=self)
+        return comments
+
     def get_slug(self):
         return slugify(self.title)
 

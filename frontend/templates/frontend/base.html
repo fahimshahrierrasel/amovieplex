@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.core.css' %} />
     <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.theme.css' %} />
     <link rel="stylesheet" href={% static 'frontend/vendor/bulma-helper/bulma-helpers.css' %}>
+    {% block extra_css %}{% endblock %}
     <link rel="stylesheet" href={% static 'frontend/css/style.css' %}>
     <!-- Styles End -->
 </head>

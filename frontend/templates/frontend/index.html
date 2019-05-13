@@ -11,7 +11,7 @@
                         <span class="movie-tag" id="coming-soon-tag">{{ movie.get_genres }}</span></br>
                         <span class="title" id="coming-soon-name">{{ movie.title }}</span>
                         <p id="coming-soon-details">{{ movie.short_plot }}</p>
-                        <p><a id="coming-soon-link" href="{% url 'single_movie' slug=movie.get_slug %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
+                        <p><a id="coming-soon-link" href="{% url 'single_movie' pk=movie.id %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
                     </div>
                 </div>
             </li>
@@ -48,7 +48,7 @@
                                         </div>
                                         <i class="far fa-3x fa-play-circle fontawesome"></i>
                                         </br>
-                                        <a href="{% url 'single_movie' slug=new.get_slug %}">Read More</a>
+                                        <a href="{% url 'single_movie' pk=new.id %}">Read More</a>
                                         </br>
                                         <span>Release Date:</span><span>{{ new.release_date }}</span>
                                     </div>
@@ -95,7 +95,7 @@
                                 <span class="movie-tag">{{ movie.get_genres }}</span></br>
                                 <span class="title">{{ movie.title }}</span>
                                 <p>{{ movie.short_plot }}</p>
-                                <p><a href="{% url 'single_movie' slug=movie.get_slug %}">FULL SYNOPSIS <i class="fas fa-chevron-right"></i></a></p>
+                                <p><a href="{% url 'single_movie' pk=movie.id %}">FULL SYNOPSIS <i class="fas fa-chevron-right"></i></a></p>
                                 <div class="columns">
                                     <div class="column is-10">
                                         <div class="tags are-medium">
@@ -136,7 +136,7 @@
                             <span class="movie-tag" id="coming_soon_tag">{{ first_movie.get_genres }}</span></br>
                             <span class="title has-text-white" id="coming_soon_name">{{ first_movie.title }}</span>
                             <p id="coming_soon_details">{{ first_movie.short_plot }}</p>
-                            <p><a id="coming_soon_link" href="{% url 'single_movie' slug=first_movie.get_slug %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
+                            <p><a id="coming_soon_link" href="{% url 'single_movie' pk=first_movie.id %}">MORE INFO <i class="fas fa-chevron-right"></i></a></p>
                         </div>
                     </div>
                     <div class="column">
@@ -150,7 +150,7 @@
                     <ul class="glide__slides">
                         {% for movie in up_comming_movies %}
                         <li class="glide__slide">
-                            <div class="card comming-soon-poster" id="what" onclick="showComingSoonDeatils(this)" data-tag='{{ movie.get_genres }}' data-title='{{ movie.title }}' data-plot='{{ movie.short_plot|escape }}' data-link="{% url 'single_movie' slug=movie.get_slug %}" data-img='{{ movie.get_feature_image }}'>
+                            <div class="card comming-soon-poster" id="what" onclick="showComingSoonDeatils(this)" data-tag='{{ movie.get_genres }}' data-title='{{ movie.title }}' data-plot='{{ movie.short_plot|escape }}' data-link="{% url 'single_movie' pk=movie.id %}" data-img='{{ movie.get_feature_image }}'>
                                 <div class="card-image">
                                     <figure class="image">
                                         <img style="background-size:cover;" src="{{ movie.get_poster_image }}" alt="Placeholder image">

@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from django.views.generic.base import TemplateView
+from django.views.generic import DetailView
 from movie.models import Movie
 
 
@@ -24,14 +25,7 @@ class IndexView(TemplateView):
         return context
 
 
-class SingleMovie(TemplateView):
+class SingleMovie(DetailView):
     template_name = 'frontend/single_movie.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SingleMovie, self).get_context_data(**kwargs)
-        movies = Movie.objects.all()
-        for movie in movies:
-            if self.kwargs['slug'] == movie.get_slug():
-                context['movie'] = movie
-                break
-        return context
+    model = Movie
+    context_object_name = 'movie'
