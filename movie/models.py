@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.apps import apps
+from django.urls import reverse
 
 
 class Genre(models.Model):
@@ -107,3 +108,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+    def get_absolute_url(self):
+        return reverse("single_movie", kwargs={"pk": self.movie.id})

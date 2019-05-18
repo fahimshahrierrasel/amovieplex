@@ -1,7 +1,11 @@
 from datetime import date, timedelta
 from django.views.generic.base import TemplateView
 from django.views.generic import DetailView
+from django.views.generic.edit import FormMixin
+from django.urls import reverse
 from movie.models import Movie
+from .forms import CommentForm
+from django.shortcuts import redirect
 
 
 class IndexView(TemplateView):
@@ -25,7 +29,25 @@ class IndexView(TemplateView):
         return context
 
 
-class SingleMovie(DetailView):
+class SingleMovie(FormMixin, DetailView):
     template_name = 'frontend/single_movie.html'
     model = Movie
     context_object_name = 'movie'
+    form_class = CommentForm
+
+    def get_success_url(self):
+        return reverse('single_movie', kwargs={'pk': self.object.pk})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            # Has some bug form resubmission occur in reload on invalid form
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.save()
+        return redirect(self.get_success_url())

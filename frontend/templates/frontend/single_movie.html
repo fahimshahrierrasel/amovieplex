@@ -5,7 +5,8 @@
 <link rel="stylesheet" href={% static 'frontend/vendor/starability/starability-growRotate.css' %}>
 {% endblock %}
 {% block hero_body %}
-<div class="hero-body" style="background-image: url({{movie.get_feature_image}}); background-repeat:no-repeat; background-size:cover;">
+<div class="hero-body"
+    style="background-image: url({{movie.get_feature_image}}); background-repeat:no-repeat; background-size:cover;">
     <div class="container has-text-white">
         <div class="columns">
             <div class="column is-7">
@@ -102,7 +103,8 @@
 <section class="section has-background-dark">
     <div class="container">
         {% with movie.get_general_images|first as first_image %}
-        <div id="image_container" style="margin-bottom: 10px; background-image: url({{ first_image }}); height: 600px; background-size:cover;">
+        <div id="image_container"
+            style="margin-bottom: 10px; background-image: url({{ first_image }}); height: 600px; background-size:cover;">
         </div>
         {% endwith %}
         <div class="glide general">
@@ -113,7 +115,8 @@
                         <div class="card" onclick="changeGeneralImage(this)" data-img="{{ image }}">
                             <div class="card-image">
                                 <figure class="image">
-                                    <img style="object-fit: cover; height: 165px; width: 165px;" src="{{ image }}" alt="{{ movie.title }}">
+                                    <img style="object-fit: cover; height: 165px; width: 165px;" src="{{ image }}"
+                                        alt="{{ movie.title }}">
                                 </figure>
                             </div>
                         </div>
@@ -122,8 +125,10 @@
                 </ul>
             </div>
             <div class="glide__arrows" data-glide-el="controls">
-                <button id="options-peek-before" class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
-                <button id="options-peek-after" class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+                <button id="options-peek-before" class="glide__arrow glide__arrow--left"
+                    data-glide-dir="<">prev</button>
+                <button id="options-peek-after" class="glide__arrow glide__arrow--right"
+                    data-glide-dir=">">next</button>
             </div>
         </div>
     </div>
@@ -139,22 +144,23 @@
                 </div>
                 <div class="tabs-details" style="overflow-y: scroll; height: 400px;">
                     {% for comment in movie.get_comments %}
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img src="https://bulma.io/images/placeholders/128x128.png">
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img src="https://bulma.io/images/placeholders/128x128.png">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>{{ comment.user.first_name }}</strong>
+                                    <small>{{ comment.commented_at|naturaltime }}</small>
+                                    <br>
+                                    {{ comment.comment }}
                                 </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <strong>{{ comment.user.first_name }}</strong> <small>{{ comment.commented_at|naturaltime }}</small>
-                                        <br>
-                                        {{ comment.comment }}
-                                    </p>
-                                </div>
                             </div>
-                        </article>
+                        </div>
+                    </article>
                     {% endfor %}
                 </div>
             </div>
@@ -165,27 +171,43 @@
                     </ul>
                 </div>
                 <div class="tabs-details">
-                    <form action="#" method="post">
+                    {% if form.errors %}
+                    <div class="notification is-danger">
+                        <button class="delete"></button>
+                        <ul>
+                            {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <form method="post">
                         {% csrf_token %}
-                        <input type="number" name="movie_id" value={{ movie.id }} hidden>
+                        {{ form.source }}
+                        <input type="number" name="movie" value={{ movie.id }} hidden>
+                        <input type="number" name="user" value={{ user.id }} hidden>
                         <fieldset class="starability-growRotate">
-                            <legend>Rate</legend>
-                            <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
-                            <input type="radio" id="first-rate1" name="rating" value="1" />
+                            <legend>Rate this movie</legend>
+                            <input type="radio" id="no-rate" class="input-no-rate" name="rate" value="0" checked
+                                aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="rate" value="1" />
                             <label for="first-rate1" title="Terrible">1 star</label>
-                            <input type="radio" id="first-rate2" name="rating" value="2" />
+                            <input type="radio" id="first-rate2" name="rate" value="2" />
                             <label for="first-rate2" title="Not good">2 stars</label>
-                            <input type="radio" id="first-rate3" name="rating" value="3" />
+                            <input type="radio" id="first-rate3" name="rate" value="3" />
                             <label for="first-rate3" title="Average">3 stars</label>
-                            <input type="radio" id="first-rate4" name="rating" value="4" />
+                            <input type="radio" id="first-rate4" name="rate" value="4" />
                             <label for="first-rate4" title="Very good">4 stars</label>
-                            <input type="radio" id="first-rate5" name="rating" value="5" />
+                            <input type="radio" id="first-rate5" name="rate" value="5" />
                             <label for="first-rate5" title="Amazing">5 stars</label>
                         </fieldset>
                         <div class="field">
-                            <label class="label">Review</label>
+                            <label class="label">Give your review</label>
                             <div class="control">
-                                <textarea class="textarea" name="message" placeholder="Your review..."></textarea>
+                                <textarea class="textarea" name="comment" placeholder="Your review..."
+                                    required></textarea>
                             </div>
                         </div>
                         <div class="field is-grouped">
@@ -194,6 +216,9 @@
                             </div>
                         </div>
                     </form>
+                    {% else %}
+                        <p>You are not logged in</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -217,45 +242,45 @@
 {% endblock %}
 {% block extraScript %}
 <script type="text/javascript">
-// General Image Carousel Start
-let generalImageSlider = new Glide('.general', {
-    type: 'carousel',
-    startAt: 0,
-    perView: 6,
-    peek: {
-        before: 100,
-        after: 100
-    }
-});
-
-function peek() {
-    generalImageSlider.update({
+    // General Image Carousel Start
+    let generalImageSlider = new Glide('.general', {
+        type: 'carousel',
+        startAt: 0,
+        perView: 6,
         peek: {
             before: 100,
             after: 100
         }
     });
-}
 
-var before = document.querySelector('#options-peek-before');
-var after = document.querySelector('#options-peek-after');
+    function peek() {
+        generalImageSlider.update({
+            peek: {
+                before: 100,
+                after: 100
+            }
+        });
+    }
 
-before.addEventListener('input', peek);
-after.addEventListener('input', peek);
+    var before = document.querySelector('#options-peek-before');
+    var after = document.querySelector('#options-peek-after');
 
-generalImageSlider.mount();
-// General Image Carousel End
+    before.addEventListener('input', peek);
+    after.addEventListener('input', peek);
 
-// Plot Modal Click Handlers Start
+    generalImageSlider.mount();
+    // General Image Carousel End
 
-document.getElementById('read_plot').addEventListener('click', function() {
-    document.getElementsByClassName('modal')[0].className += ' is-active';
-});
+    // Plot Modal Click Handlers Start
 
-function closeModal() {
-    let modal = document.getElementsByClassName('modal')[0];
-    modal.className = modal.className.replace(' is-active', '');
-}
+    document.getElementById('read_plot').addEventListener('click', function () {
+        document.getElementsByClassName('modal')[0].className += ' is-active';
+    });
+
+    function closeModal() {
+        let modal = document.getElementsByClassName('modal')[0];
+        modal.className = modal.className.replace(' is-active', '');
+    }
 // Plot Modal Click Handlers Stop
 </script>
 {% endblock %}
