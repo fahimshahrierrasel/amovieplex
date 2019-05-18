@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormMixin
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.urls import reverse, reverse_lazy
+from django.shortcuts import redirect
 from movie import models as movie_models
 from . import forms
 
@@ -37,10 +39,35 @@ class MovieListView(LoginRequiredMixin, ListView):
     context_object_name = 'movies'
 
 
-class MovieDetailView(LoginRequiredMixin, DetailView):
+class MovieDetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = movie_models.Movie
     template_name = 'dashboard/movies/movie_detail.html'
     extra_context = {'page_title': 'Movie Detail'}
+    form_class = forms.MovieMediaForm
+
+    def get_success_url(self):
+        return reverse('dashboard.movie.detail', kwargs={'pk': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        media_form = self.get_form()
+        media_form.fields['movie'].initial = self.object.pk
+        context['form'] = media_form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            # Has some bug form resubmission occur in reload on invalid form
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.save()
+        return redirect(self.get_success_url())
 
 
 class MovieCreateView(LoginRequiredMixin, CreateView):

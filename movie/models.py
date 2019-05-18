@@ -63,6 +63,18 @@ class Movie(models.Model):
             movie=self, media_type=media_type)
         return images
 
+    def get_all_images(self):
+        media_type = MediaType.objects.filter(type='Video').first()
+        images = MovieMedia.objects.filter(
+            movie=self).exclude(media_type=media_type)
+        return images
+
+    def get_all_videos(self):
+        media_type = MediaType.objects.filter(type='Video').first()
+        videos = MovieMedia.objects.filter(
+            movie=self, media_type=media_type)
+        return videos
+
     def get_show_times(self):
         ShowTime = apps.get_model('theater', 'ShowTime')
         show_times = ShowTime.objects.filter(movie=self)
@@ -86,7 +98,7 @@ class MediaType(models.Model):
 class MovieMedia(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="movie_images/", blank=True, null=True)
-    video_url = models.URLField(blank=True, null=True)
+    video_url = models.CharField(max_length=100, blank=True, null=True)
     media_type = models.ForeignKey(
         MediaType, null=True, on_delete=models.SET_NULL)
     uploaded_at = models.DateTimeField(auto_now_add=True)

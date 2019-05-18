@@ -1,5 +1,14 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
+
+{% block css %}
+
+<link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css" />
+
+{% endblock css %}
 
 {% block content %}
 
@@ -8,7 +17,7 @@
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <img src={{ movie.get_poster_image }} class="card-img" alt={{ movie.title }}>
+                    <img class="card-img" src={{ movie.get_poster_image }} alt={{ movie.title }}>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -129,6 +138,60 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseMovieMedia">
+                <h6 class="m-0 font-weight-bold text-primary">Movie Medias</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseMovieMedia">
+                <div class="card-body" style="overflow-y: scroll; height: 345px;">
+                    <div id="aniimated-thumbnials">
+                        {% for image in movie.get_all_images %}
+                        <a href="{{image}}">
+                            <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;"
+                                src={{ image }} />
+                        </a>
+                        {% endfor %}
+
+                        {% for video in movie.get_all_videos %}
+                        <a href="https://www.youtube.com/watch?v={{video.video_url}}">
+                            <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;"
+                                src="//img.youtube.com/vi/{{video.video_url}}/default.jpg" />
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseNewMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseNewMovieMedia">
+                <h6 class="m-0 font-weight-bold text-primary">New Movie Media</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseNewMovieMedia">
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            New Media
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="modalPlot" tabindex="-1" role="dialog" aria-labelledby="modalPlotTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
@@ -150,3 +213,27 @@
 </div>
 
 {% endblock content %}
+
+
+{% block js %}
+
+<!-- A jQuery plugin that adds cross-browser mouse wheel support. (Optional) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"></script>
+
+<!-- lightgallery plugins -->
+<!-- <script src="js/lg-thumbnail.min.js"></script>
+<script src="js/lg-fullscreen.min.js"></script> -->
+
+<script>
+    $('#aniimated-thumbnials').lightGallery({
+        thumbnail: true,
+        animateThumb: false,
+        showThumbByDefault: true,
+        loadYoutubeThumbnail: true,
+        youtubeThumbSize: 'default',
+    }); 
+</script>
+
+{% endblock js %}
