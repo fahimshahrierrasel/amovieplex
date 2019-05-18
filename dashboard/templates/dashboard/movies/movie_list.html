@@ -1,0 +1,63 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Release Date</th>
+                        <th>Genres</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Release Date</th>
+                        <th>Genres</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for movie in movies %}
+                    <tr>
+                        <td><img style="background-size:cover; height: 15%;" src={{ movie.get_poster_image }}
+                                alt="Placeholder image"></td>
+                        <td><a href="{% url 'dashboard.movie.detail' pk=movie.id %}">{{ movie.title }}</a></td>
+                        <td>{{ movie.director }}</td>
+                        <td>{{ movie.release_date }}</td>
+                        <td>{{ movie.get_genres }}</td>
+                        <td class="text-center">
+                            <i data-toggle="tooltip" data-placement="top"
+                                title="{{ movie.status|yesno:'Active,Inactive'}}"
+                                class="fas fa-circle {{ movie.status|yesno:'text-success,text-danger'}}"></i>
+                        </td>
+                        <td class="text-center">
+                            <a href={% url 'dashboard.movie.edit' pk=movie.id %} class="btn btn-primary text-light"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+    });
+</script>
+{% endblock %}
