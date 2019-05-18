@@ -104,7 +104,7 @@
     <div class="container">
         {% with movie.get_general_images|first as first_image %}
         <div id="image_container"
-            style="margin-bottom: 10px; background-image: url({{ first_image }}); height: 600px; background-size:cover;">
+            style="margin-bottom: 10px; background-image: url('{{ first_image }}'); height: 600px; background-size:cover;">
         </div>
         {% endwith %}
         <div class="glide general">
