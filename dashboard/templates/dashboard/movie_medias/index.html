@@ -1,0 +1,121 @@
+{% extends 'dashboard/base.html' %}
+
+
+{% block css %}
+
+<link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css" />
+
+{% endblock css %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-3">
+        <h5>Movies</h5>
+        <div class="list-group" style="overflow-y: scroll; max-height: 400px;">
+            {% for movie in movies %}
+            <button type="button" class="list-group-item list-group-item-action {% if forloop.first %}active{% endif %}"
+                data-movie_id={{movie.id}} onclick="getMovieMedias(this)">
+                {{ movie.title }}
+            </button>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="card shadow mb-4">
+            <!-- Card Header -->
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Movie Medias</h6>
+            </div>
+            <!-- Card Content-->
+            <div class="card-body" style="overflow-y: scroll; max-height: 600px;">
+                <div id="aniimated-thumbnials">
+                    {% with movies|first as first_movie %}
+                    {% for image in first_movie.get_all_images %}
+                    <a href="{{image}}">
+                        <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;"
+                            src={{ image }} />
+                    </a>
+                    {% endfor %}
+
+                    {% for video in first_movie.get_all_videos %}
+                    <a href="https://www.youtube.com/watch?v={{video.video_url}}">
+                        <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;"
+                            src="//img.youtube.com/vi/{{video.video_url}}/default.jpg" />
+                    </a>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block js %}
+<!-- A jQuery plugin that adds cross-browser mouse wheel support. (Optional) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js"></script>
+
+<script>
+    let animatedThumbnail = $('#aniimated-thumbnials');
+    animatedThumbnail.lightGallery({
+        thumbnail: true,
+        animateThumb: false,
+        showThumbByDefault: true,
+        loadYoutubeThumbnail: true,
+        youtubeThumbSize: 'default',
+    }); 
+</script>
+<script>
+    let currentMovie = 1;
+    let rootUrl = window.location.origin;
+    function getMovieMedias(movie) {
+        let allListItem = document.getElementsByClassName('list-group-item');
+        Array.from(allListItem).forEach(listItem => {
+            if (listItem.className.includes('active'))
+                listItem.className = listItem.className.replace(' active', '');
+        });
+        movie.className += ' active'
+
+        let movieId = movie.getAttribute('data-movie_id')
+        if (currentMovie !== movieId) {
+            currentMovie = movieId
+            let mediaUrl = `/admin/dashboard/movie-medias/${currentMovie}`
+            $.ajax({
+                url: mediaUrl,
+                type: "GET",
+                success: function (data) {
+                    animatedThumbnail.empty();
+                    let content = '';
+                    data.forEach(element => {
+                        let media = element.fields
+                        if (media.video_url === null) {
+                            content += `<a href="${rootUrl}/media/${media.image}">
+                                <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;" src="${rootUrl}/media/${media.image}" />
+                            </a>`
+                        } else {
+                            content += `<a href="https://www.youtube.com/watch?v=${media.video_url}">
+                                <img class="img-thumbnail m-1" style="height: 100px; width:150px; object-fit: contain;"
+                                    src="//img.youtube.com/vi/${media.video_url}/default.jpg" />
+                            </a>`
+                        }
+                    });
+                    animatedThumbnail.append(content);
+                    animatedThumbnail.data('lightGallery').destroy(true);
+                    animatedThumbnail.lightGallery();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+    }
+</script>
+{% endblock js %}

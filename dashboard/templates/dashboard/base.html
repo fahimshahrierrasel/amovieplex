@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="https://github.com/fahimshahrierrasel">
+  <link rel="shortcut icon" href={% static 'dashboard/img/favicon.ico' %} type="image/x-icon">
 
   <title>{{ page_title }}</title>
 
@@ -72,7 +73,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Movie</h6>
             <a class="collapse-item" href={% url 'dashboard.movie.list' %}>Movies</a>
-            <a class="collapse-item" href="cards.html">Movie Medias</a>
+            <a class="collapse-item" href={% url 'dashboard.movie_medias' %}>Movie Medias</a>
           </div>
         </div>
       </li>
