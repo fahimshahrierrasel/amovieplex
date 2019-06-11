@@ -94,18 +94,40 @@ class MovieUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("dashboard.movie.list")
 
 
-class MovieMediaView(LoginRequiredMixin, TemplateView):
+class MovieMediaView(LoginRequiredMixin, FormMixin, TemplateView):
     login_url = "/admin/dashboard/login"
     extra_context = {"page_title": "Movie Medias"}
     template_name = "dashboard/movie_medias/index.html"
+    form_class = forms.MovieMediaForm
+
+    def get_success_url(self):
+        return reverse("dashboard.medias")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["movies"] = movie_models.Movie.objects.all()
+        all_movies = movie_models.Movie.objects.all()
+        context["movies"] = all_movies
+        media_form = self.get_form()
+        media_form.fields["movie"].initial = all_movies[0].id
+        context["form"] = media_form
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            # Has some bug form resubmission occur in reload on invalid form
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.save()
+        return redirect(self.get_success_url())
 
 
 def medias_of_movie(request, movie_id):
     movie_medias = movie_models.MovieMedia.objects.filter(movie=movie_id)
-    data = serializers.serialize('json', movie_medias)
-    return HttpResponse(data, content_type='application/json')
+    data = serializers.serialize("json", movie_medias)
+    return HttpResponse(data, content_type="application/json")

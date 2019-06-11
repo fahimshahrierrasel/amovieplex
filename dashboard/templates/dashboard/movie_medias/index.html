@@ -1,5 +1,5 @@
 {% extends 'dashboard/base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block css %}
 
@@ -24,6 +24,25 @@
 
     </div>
     <div class="col">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseNewMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseNewMovieMedia">
+                <h6 class="m-0 font-weight-bold text-primary">New Movie Media</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse" id="collapseNewMovieMedia">
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            New Media
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="card shadow mb-4">
             <!-- Card Header -->
             <div class="card-header py-3">
@@ -85,6 +104,9 @@
         movie.className += ' active'
 
         let movieId = movie.getAttribute('data-movie_id')
+
+        $('#id_movie').val(movieId)
+
         if (currentMovie !== movieId) {
             currentMovie = movieId
             let mediaUrl = `/admin/dashboard/movie-medias/${currentMovie}`
