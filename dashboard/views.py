@@ -44,7 +44,7 @@ class MovieListView(LoginRequiredMixin, ListView):
     template_name = "dashboard/movies/movie_list.html"
     model = movie_models.Movie
     context_object_name = "movies"
-    ordering = ['-release_date']
+    ordering = ["-release_date"]
 
 
 class MovieDetailView(LoginRequiredMixin, FormMixin, DetailView):
@@ -132,3 +132,13 @@ def medias_of_movie(request, movie_id):
     movie_medias = movie_models.MovieMedia.objects.filter(movie=movie_id)
     data = serializers.serialize("json", movie_medias)
     return HttpResponse(data, content_type="application/json")
+
+
+class ShowTimeView(LoginRequiredMixin, ListView):
+    login_url = "/admin/dashboard/login"
+    extra_context = {"page_title": "Show Times"}
+    template_name = "dashboard/show_times/show_times_list.html"
+    model = movie_models.Movie
+    context_object_name = "movies"
+    ordering = ["-release_date"]
+

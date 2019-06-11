@@ -34,5 +34,11 @@ urlpatterns = [
         "movie-medias/<int:movie_id>",
         views.medias_of_movie,
         name="dashboard.medias"
+    ),
+    # Show Times
+    path(
+        "show-times",
+        views.ShowTimeView.as_view(),
+        name="dashboard.show_times"
     )
 ]

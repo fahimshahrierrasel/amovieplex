@@ -1,0 +1,65 @@
+{% extends 'dashboard/base.html' %}
+
+
+{% block css %}
+<!-- media queries for different screen size and change the movie card count -->
+<style>
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+        .card-columns {
+            column-count: 2
+        }
+    }
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        .card-columns {
+            column-count: 3
+        }
+    }
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        .card-columns {
+            column-count: 4
+        }
+    }
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
+        .card-columns {
+            column-count: 5
+        }
+    }
+</style>
+{% endblock css %}
+
+
+{% block content %}
+<div class="card-columns">
+    {% for movie in movies %}
+    <a href="#">
+        <div class="card">
+            <div class="card-header">{{ movie.title }}</div>
+            <img src="{{ movie.get_poster_image }}" class="card-img-top" alt="{{ movie.title }}">
+            <div class="card-footer">
+                <small class="text-muted">3 Showing Times</small>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        // Hover effect on the movie card
+        $('.card').hover(function () {
+            $(this).addClass('shadow-sm');
+        }, function () {
+            $(this).removeClass('shadow-sm');
+        });
+    });
+</script>
+{% endblock %}
