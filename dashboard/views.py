@@ -44,6 +44,7 @@ class MovieListView(LoginRequiredMixin, ListView):
     template_name = "dashboard/movies/movie_list.html"
     model = movie_models.Movie
     context_object_name = "movies"
+    ordering = ['-release_date']
 
 
 class MovieDetailView(LoginRequiredMixin, FormMixin, DetailView):
