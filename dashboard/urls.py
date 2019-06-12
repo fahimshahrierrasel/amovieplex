@@ -37,8 +37,13 @@ urlpatterns = [
     ),
     # Show Times
     path(
-        "show-times",
-        views.ShowTimeView.as_view(),
+        "showtimes",
+        views.ShowTimeListView.as_view(),
         name="dashboard.show_times"
+    ),
+    path(
+        "showtimes/<int:movie_id>",
+        views.ShowTimeDetailView.as_view(),
+        name="dashboard.show_times.details"
     )
 ]

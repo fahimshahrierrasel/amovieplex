@@ -1,0 +1,155 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img class="card-img" src={{ movie.get_poster_image }} alt={{ movie.title }}>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ movie.title }}</h3>
+                        <hr>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td><strong>DIRECTOR</strong></td>
+                                    <td>{{ movie.director }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>STARRING</strong></td>
+                                    <td>{{ movie.starring }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Genres</strong></td>
+                                    <td>{{ movie.get_genres }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <!-- Collapsable Card Example -->
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseMovieInfo" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseMovieInfo">
+                <h6 class="m-0 font-weight-bold text-primary">Movie Info</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseMovieInfo">
+                <div class="card-body">
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <td><strong>Rating</strong></td>
+                                <td>{{ movie.rating.title }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Release Date</strong></td>
+                                <td>{{ movie.release_date }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Runtime</strong></td>
+                                <td><span class="badge badge-primary">{{ movie.running_time }} Minutes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td>{{ movie.status|yesno:'Active,Inactive'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseMovieMedia">
+                <h6 class="m-0 font-weight-bold text-primary">Show Times</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseMovieMedia">
+                <div class="card-body" style="overflow-y: scroll; height: 345px;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Hall</th>
+                                    <th>Screen Day</th>
+                                    <th>Screen Times</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for show_time in movie.get_show_times %}
+                                <tr>
+                                    <td>{{ show_time.hall }}</td>
+                                    <td>{{ show_time.screen_day }}</td>
+                                    <td>
+                                        {% for movietime in show_time.screen_times.all %}
+                                        <span
+                                            class="badge badge-secondary">{{ movietime.start_time|time:'H:i' }}-{{ movietime.end_time|time:'H:i' }}</span>
+                                        {% endfor %}
+                                        {% for movietime in show_time.screen_times.all %}
+                                        <span
+                                            class="badge badge-secondary">{{ movietime.start_time|time:'H:i' }}-{{ movietime.end_time|time:'H:i' }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="text-center">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                            title="{{ movie.status|yesno:'Active,Inactive'}}"
+                                            class="fas fa-circle {{ movie.status|yesno:'text-success,text-danger'}}"></i>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href={% url 'dashboard.movie.edit' pk=movie.id %}
+                                            class="btn btn-primary text-light"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseNewMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseNewMovieMedia">
+                <h6 class="m-0 font-weight-bold text-primary">New Show Time</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseNewMovieMedia">
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            New Show Time
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -13,6 +13,7 @@ from django.views.generic import (
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect
 from movie import models as movie_models
+from theater import models as theater_models
 from . import forms
 from django.http import HttpResponse
 from django.core import serializers
@@ -123,8 +124,8 @@ class MovieMediaView(LoginRequiredMixin, FormMixin, TemplateView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.save()
+        movie_media = form.save(commit=False)
+        movie_media.save()
         return redirect(self.get_success_url())
 
 
@@ -134,7 +135,7 @@ def medias_of_movie(request, movie_id):
     return HttpResponse(data, content_type="application/json")
 
 
-class ShowTimeView(LoginRequiredMixin, ListView):
+class ShowTimeListView(LoginRequiredMixin, ListView):
     login_url = "/admin/dashboard/login"
     extra_context = {"page_title": "Show Times"}
     template_name = "dashboard/show_times/show_times_list.html"
@@ -142,3 +143,37 @@ class ShowTimeView(LoginRequiredMixin, ListView):
     context_object_name = "movies"
     ordering = ["-release_date"]
 
+
+class ShowTimeDetailView(LoginRequiredMixin, FormMixin, DetailView):
+    model = movie_models.Movie
+    template_name = "dashboard/show_times/show_times_detail.html"
+    extra_context = {"page_title": "Movie Show Time"}
+    form_class = forms.ShowTimeForm
+    slug_field = 'pk'
+    slug_url_kwarg = 'movie_id'
+
+    def get_success_url(self):
+        return reverse("dashboard.show_times.details", kwargs={'movie_id': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        media_form = self.get_form()
+        media_form.fields["movie"].initial = self.object.pk
+        # Only showing the screen times associated with the movie
+        media_form.fields["screen_times"].queryset = theater_models.ScreenTime.objects.filter(movie=self.object)
+        context["form"] = media_form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            # Has some bug form resubmission occur in reload on invalid form
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        show_time = form.save(commit=False)
+        show_time.save()
+        return redirect(self.get_success_url())
