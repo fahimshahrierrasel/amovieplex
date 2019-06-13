@@ -45,5 +45,20 @@ urlpatterns = [
         "showtimes/<int:movie_id>",
         views.ShowTimeDetailView.as_view(),
         name="dashboard.show_times.details"
+    ),
+    path(
+        "showtimes/<int:pk>/edit",
+        views.ShowTimeUpdateView.as_view(),
+        name="dashboard.show_times.edit"
+    ),
+    path(
+        "screentimes/create",
+        views.ScreenTimeCreateView.as_view(),
+        name="dashboard.screen_times.create"
+    ),
+    path(
+        "formclose",
+        views.HeadLessFormCloseView.as_view(),
+        name="dashboard.formclose"
     )
 ]

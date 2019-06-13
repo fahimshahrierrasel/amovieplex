@@ -1,0 +1,11 @@
+{% extends 'dashboard/headless_base.html' %}
+
+{% block js %}
+<script type="text/javascript">
+    window.onunload = refreshParent;
+    function refreshParent() {
+        window.opener.location.reload();
+    } 
+    window.close();
+</script>
+{% endblock %}

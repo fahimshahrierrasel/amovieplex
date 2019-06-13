@@ -49,7 +49,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href={% url 'dashboard.index' %} >
+        <a class="nav-link" href={% url 'dashboard.index' %}>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -79,8 +79,8 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTheater" aria-expanded="true"
-          aria-controls="collapseTheater">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTheater"
+          aria-expanded="true" aria-controls="collapseTheater">
           <i class="fas fa-fw fa-cog"></i>
           <span>Theater</span>
         </a>
@@ -198,7 +198,7 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">{{ page_title }}</h1>
-          
+
           {% block content %}
           {% endblock %}
 
@@ -212,7 +212,8 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; <a target="_blank" href="https://github.com/fahimshahrierrasel">Fahim Shahrier Rasel</a> {% now "Y" %}</span>
+            <span>Copyright &copy; <a target="_blank" href="https://github.com/fahimshahrierrasel">Fahim Shahrier
+                Rasel</a> {% now "Y" %}</span>
           </div>
         </div>
       </footer>
@@ -249,22 +250,33 @@
     </div>
   </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src={% static 'dashboard/vendor/jquery/jquery.min.js' %}></script>
-<script src={% static 'dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src={% static 'dashboard/vendor/jquery/jquery.min.js' %}></script>
+  <script src={% static 'dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}></script>
 
-<!-- Core plugin JavaScript-->
-<script src={% static 'dashboard/vendor/jquery-easing/jquery.easing.min.js' %}></script>
+  <!-- Core plugin JavaScript-->
+  <script src={% static 'dashboard/vendor/jquery-easing/jquery.easing.min.js' %}></script>
 
-<!-- Custom scripts for all pages-->
-<script src={% static 'dashboard/js/sb-admin-2.min.js' %}></script>
-<!-- Page level plugins -->
-<script src={% static 'dashboard/vendor/datatables/jquery.dataTables.min.js' %}></script>
-<script src={% static 'dashboard/vendor/datatables/dataTables.bootstrap4.min.js' %}></script>
-<script src={% static 'dashboard/vendor/chart.js/Chart.min.js' %}></script>
+  <!-- Custom scripts for all pages-->
+  <script src={% static 'dashboard/js/sb-admin-2.min.js' %}></script>
+  <!-- Page level plugins -->
+  <script src={% static 'dashboard/vendor/datatables/jquery.dataTables.min.js' %}></script>
+  <script src={% static 'dashboard/vendor/datatables/dataTables.bootstrap4.min.js' %}></script>
+  <script src={% static 'dashboard/vendor/chart.js/Chart.min.js' %}></script>
 
-<!-- Custom JS -->
-{% block js %} {% endblock %}
+  <script>
+    var popupWindow = null;
+    function centeredPopup(url, winName, width, height) {
+      LeftPosition = (screen.width) ? (screen.width - width) / 2 : 0;
+      TopPosition = (screen.height) ? (screen.height - height) / 2 : 0;
+      settings =
+        `height=${height},width=${width},top=${TopPosition},left=${LeftPosition},scrollbars=1,resizable=1`;
+      popupWindow = window.open(url, winName, settings)
+    }
+  </script>
+
+  <!-- Custom JS -->
+  {% block js %} {% endblock %}
 
 </body>
 

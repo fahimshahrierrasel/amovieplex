@@ -41,3 +41,10 @@ class ShowTimeForm(forms.ModelForm):
     class Meta:
         model = theater_models.ShowTime
         fields = ("movie", "hall", "screen_day", "screen_times")
+
+
+class ScreenTimeForm(forms.ModelForm):
+    class Meta:
+        model = theater_models.ScreenTime
+        fields = ("movie", "start_time", "end_time")
+

@@ -144,23 +144,49 @@ class ShowTimeListView(LoginRequiredMixin, ListView):
     ordering = ["-release_date"]
 
 
+class ShowTimeUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "/admin/dashboard/login"
+    extra_context = {"page_title": "Update Screen Time"}
+    model = theater_models.ShowTime
+    form_class = forms.ShowTimeForm
+    template_name = "dashboard/headless_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        show_time_form = self.get_form()
+        show_time_form.fields[
+            "screen_times"
+        ].queryset = theater_models.ScreenTime.objects.filter(
+            movie=self.object.movie
+        )
+        context["form"] = show_time_form
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard.formclose")
+
+
 class ShowTimeDetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = movie_models.Movie
     template_name = "dashboard/show_times/show_times_detail.html"
     extra_context = {"page_title": "Movie Show Time"}
     form_class = forms.ShowTimeForm
-    slug_field = 'pk'
-    slug_url_kwarg = 'movie_id'
+    slug_field = "pk"
+    slug_url_kwarg = "movie_id"
 
     def get_success_url(self):
-        return reverse("dashboard.show_times.details", kwargs={'movie_id': self.object.pk})
+        return reverse(
+            "dashboard.show_times.details", kwargs={"movie_id": self.object.pk}
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         media_form = self.get_form()
         media_form.fields["movie"].initial = self.object.pk
         # Only showing the screen times associated with the movie
-        media_form.fields["screen_times"].queryset = theater_models.ScreenTime.objects.filter(movie=self.object)
+        media_form.fields[
+            "screen_times"
+        ].queryset = theater_models.ScreenTime.objects.filter(movie=self.object)
         context["form"] = media_form
         return context
 
@@ -177,3 +203,17 @@ class ShowTimeDetailView(LoginRequiredMixin, FormMixin, DetailView):
         show_time = form.save(commit=False)
         show_time.save()
         return redirect(self.get_success_url())
+
+
+class ScreenTimeCreateView(LoginRequiredMixin, CreateView):
+    login_url = "/admin/dashboard/login"
+    extra_context = {"page_title": "New Screen Time"}
+    model = theater_models.ScreenTime
+    form_class = forms.ScreenTimeForm
+    template_name = "dashboard/show_times/headless_form.html"
+
+
+class HeadLessFormCloseView(LoginRequiredMixin, TemplateView):
+    login_url = "/admin/dashboard/login"
+    extra_context = {"page_title": "Movie Medias"}
+    template_name = "dashboard/headless_form_close.html"

@@ -76,7 +76,7 @@
 
 <div class="row">
     <div class="col">
-        <div class="card shadow mb-4">
+        <div class="card shadow">
             <!-- Card Header - Accordion -->
             <a href="#collapseMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
                 aria-expanded="true" aria-controls="collapseMovieMedia">
@@ -117,8 +117,7 @@
                                             class="fas fa-circle {{ movie.status|yesno:'text-success,text-danger'}}"></i>
                                     </td>
                                     <td class="text-center">
-                                        <a href={% url 'dashboard.movie.edit' pk=movie.id %}
-                                            class="btn btn-primary text-light"><i class="fas fa-edit"></i></a>
+                                        <a onclick="centeredPopup('{% url 'dashboard.show_times.edit' pk=show_time.id %}','Screen Time', 600, 800)" class="btn btn-primary text-light"><i class="fas fa-edit"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -131,14 +130,14 @@
 
     </div>
     <div class="col-4">
-        <div class="card shadow mb-4">
+        <div class="card shadow">
             <!-- Card Header - Accordion -->
-            <a href="#collapseNewMovieMedia" class="d-block card-header py-3" data-toggle="collapse" role="button"
+            <a href="#collapseNewMovieMedia" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
                 aria-expanded="true" aria-controls="collapseNewMovieMedia">
                 <h6 class="m-0 font-weight-bold text-primary">New Show Time</h6>
             </a>
             <!-- Card Content - Collapse -->
-            <div class="collapse show" id="collapseNewMovieMedia">
+            <div class="collapse" id="collapseNewMovieMedia">
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}

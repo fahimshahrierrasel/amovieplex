@@ -1,0 +1,22 @@
+{% extends 'dashboard/headless_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card border-bottom-success mt-2">
+    <div class="card-header">{{ page_title }}</div>
+    <div class="card-body">
+        <form class="user" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                {% if not form.instance.pk %}
+                Create
+                {% else %}
+                Update
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
