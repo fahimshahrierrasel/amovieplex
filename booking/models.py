@@ -22,6 +22,7 @@ class Booking(models.Model):
 
 
 class Ticket(models.Model):
+    ticketId = models.CharField(max_length=10)
     movie = models.ForeignKey(
         movie_models.Movie, null=True, on_delete=models.SET_NULL
     )
@@ -34,4 +35,3 @@ class Ticket(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     show_date = models.DateField()
     seat_number = models.CharField(max_length=10)
-

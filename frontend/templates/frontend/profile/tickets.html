@@ -1,0 +1,56 @@
+{% extends 'frontend/base.html' %}
+
+
+{% block hero_body %}
+<div class="hero-body has-background-primary">
+    <div class="container">
+        <h1 class="title">
+            Fahim Shahrier Rasel
+        </h1>
+        <h2 class="subtitle">
+            fahimshahrier2@gmail.com
+        </h2>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-fifth">
+                {% include 'frontend/profile/sidebar.html' %}
+            </div>
+            <div class="column">
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Movie</th>
+                            <th>Show at</th>
+                            <th>Total tickets</th>
+                            <th>Bought at</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a>RWSASFE</a></td>
+                            <td><a>Avenger Endgame</a></td>
+                            <td>19/02/2019 at 12:00PM</td>
+                            <td>1</td>
+                            <td>17/02/2019</td>
+                            <td>
+                                <a class="button is-danger is-outlined">Cancel</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section
+{% endblock %}
+    
+    

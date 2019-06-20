@@ -1,0 +1,17 @@
+<aside class="menu">
+    <p class="menu-label">
+        General
+    </p>
+    <ul class="menu-list">
+        <li><a href={% url 'user_dashboard' %}>Dashboard</a></li>
+        <li><a href={% url 'user_tickets' %}>Ticktes</a></li>
+        <li><a href={% url 'user_reviews' %}>Reviews</a></li>
+    </ul>
+    <p class="menu-label">
+        Administration
+    </p>
+    <ul class="menu-list">
+        <li><a href={% url 'profile_edit' %}>Edit Profile</a></li>
+        <li><a href={% url 'change_password' %}>Change Password</a></li>
+    </ul>
+</aside>
