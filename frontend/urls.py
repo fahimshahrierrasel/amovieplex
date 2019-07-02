@@ -9,4 +9,7 @@ urlpatterns = [
     path("user/reviews", views.UserReviewView.as_view(), name="user_reviews"),
     path("user/edit-profile", views.UserEditProfileView.as_view(), name="profile_edit"),
     path("user/change-password", views.UserChangePasswordView.as_view(), name="change_password"),
+    path("user/signup", views.UserRegistrationView.as_view(), name="user_signup"),
+    path("user/login", views.UserLoginView.as_view(), name="user_login"),
+    path("user/logout", views.UserLogoutView.as_view(), name="user_logout")
 ]

@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MoviePlex</title>
     <!-- Styles Start -->
-    <link rel="stylesheet" href={% static 'frontend/vendor/bulma/bulma.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.core.css' %} />
-    <link rel="stylesheet" type="text/css" href={% static 'frontend/vendor/glide/css/glide.theme.css' %} />
-    <link rel="stylesheet" href={% static 'frontend/vendor/bulma-helper/bulma-helpers.css' %}>
+    <link rel="stylesheet" href="{% static 'frontend/vendor/bulma/bulma.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/glide/css/glide.core.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/glide/css/glide.theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'frontend/vendor/bulma-helper/bulma-helpers.css' %}">
     {% block extra_css %}{% endblock %}
-    <link rel="stylesheet" href={% static 'frontend/css/style.css' %}>
+    <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
     <!-- Styles End -->
 </head>
 
@@ -24,7 +23,7 @@
             <nav class="navbar is-transparent is-fixed-top" id="navbar">
                 <div class="container">
                     <div class="navbar-brand">
-                        <a class="navbar-item" href={% url 'index' %}>
+                        <a class="navbar-item" href="{% url 'index' %}">
                             <span class="has-text-white">MoviePlex</span>
                         </a>
                         <span class="navbar-burger burger" data-target="navbarMenuHeroA">
@@ -35,7 +34,7 @@
                     </div>
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
-                            <a class="navbar-item has-text-white" href={% url 'index' %}>
+                            <a class="navbar-item has-text-white" href="{% url 'index' %}">
                                 Home
                             </a>
                             <a class="navbar-item has-text-white">
@@ -44,6 +43,26 @@
                             <a class="navbar-item has-text-white">
                                 Documentation
                             </a>
+                            {% if user.is_authenticated %}
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link has-text-white" href="javascript:;">
+                                    {{ user.first_name }}
+                                </a>
+                                <div class="navbar-dropdown is-boxed">
+                                    <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
+                                        Dashboard
+                                    </a>
+                                    <hr class="navbar-divider">
+                                    <a class="navbar-item" href="{% url 'user_logout' %}">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                            {% else %}
+                            <a class="navbar-item has-text-white" href="{% url 'user_login' %}">
+                                Login
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -116,8 +135,8 @@
     <!-- Footer end -->
     <!-- Scripts Start -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script type="text/javascript" src={% static 'frontend/vendor/glide/js/glide.js' %}></script>
-    <script type="text/javascript" src={% static 'frontend/js/main.js' %}></script>
+    <script type="text/javascript" src="{% static 'frontend/vendor/glide/js/glide.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/js/main.js' %}"></script>
     <!-- Scripts end -->
     {% block extraScript %} {% endblock %}
 </body>

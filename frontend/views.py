@@ -1,12 +1,16 @@
 from datetime import date, timedelta
-from django.views.generic.base import TemplateView
+
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from django.views.generic.edit import FormMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.generic import (DetailView)
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import (FormMixin, FormView)
+
 from movie.models import Movie
 from .forms import CommentForm
-from django.shortcuts import redirect
 
 
 class IndexView(TemplateView):
@@ -55,32 +59,60 @@ class SingleMovie(FormMixin, DetailView):
         return redirect(self.get_success_url())
 
 
-class UserDashboardView(TemplateView):
-    # login_url = "/admin/dashboard/login"
+class UserDashboardView(LoginRequiredMixin, TemplateView):
+    login_url = "user_login"
     extra_context = {"page_title": "Dashboard"}
     template_name = "frontend/profile/dashboard.html"
 
 
-class UserTicketView(TemplateView):
-    # login_url = "/admin/dashboard/login"
+class UserTicketView(LoginRequiredMixin, TemplateView):
+    login_url = "user_login"
     extra_context = {"page_title": "Tickets"}
     template_name = "frontend/profile/tickets.html"
 
 
-class UserReviewView(TemplateView):
-    # login_url = "/admin/dashboard/login"
+class UserReviewView(LoginRequiredMixin, TemplateView):
+    login_url = "user_login"
     extra_context = {"page_title": "Reviews"}
     template_name = "frontend/profile/reviews.html"
 
 
-class UserEditProfileView(TemplateView):
-    # login_url = "/admin/dashboard/login"
+class UserEditProfileView(LoginRequiredMixin, TemplateView):
+    login_url = "user_login"
     extra_context = {"page_title": "Edit Profile"}
     template_name = "frontend/profile/edit.html"
 
 
-class UserChangePasswordView(TemplateView):
-    # login_url = "/admin/dashboard/login"
+class UserChangePasswordView(LoginRequiredMixin, TemplateView):
+    login_url = "user_login"
     extra_context = {"page_title": "Change Password"}
     template_name = "frontend/profile/password.html"
 
+
+class UserRegistrationView(FormView):
+    # redirect_authenticated_user = True
+    template_name = "frontend/auth/register.html"
+    form_class = UserCreationForm
+    extra_context = {"page_title": "User Registration"}
+    success_url = "/user/login"
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            return redirect(self.success_url)
+        else:
+            return self.form_invalid(form)
+
+
+class UserLoginView(LoginView):
+    template_name = "frontend/auth/login.html"
+    redirect_authenticated_user = True
+    extra_context = {"page_title": "User Login"}
+
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        return url or reverse("user_dashboard")
+
+
+class UserLogoutView(LogoutView):
+    next_page = "user_login"

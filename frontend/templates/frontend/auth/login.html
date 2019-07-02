@@ -1,0 +1,98 @@
+{% extends 'frontend/base.html' %}
+
+
+{% block hero_body %}
+<div class="hero-body has-background-primary">
+    <div class="container">
+        <h1 class="title">
+            Login
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-third">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem veniam iusto dicta, soluta
+                    asperiores accusantium est consequatur impedit quaerat cupiditate, blanditiis sit qui explicabo
+                    repellendus! Adipisci voluptates quibusdam necessitatibus fugiat?
+                </p>
+            </div>
+            <div class="column">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">{{ form.username.label }}</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left">
+                                    <input class="input" type="text" name="username" placeholder="Username">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
+
+                                {% if form.username.errors %}
+                                <p class="help is-danger">
+                                    <ul>
+                                      {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                      {% endfor %}
+                                    </ul>
+                                </p>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">{{ form.password.label }}</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input" type="password" name="password" placeholder="Password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-key"></i>
+                                    </span>
+                                </p>
+                                {% if form.password.errors %}
+                                <p class="help is-danger">
+                                    <ul>
+                                      {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                      {% endfor %}
+                                    </ul>
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <!-- Left empty for spacing -->
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <button type="submit" class="button is-primary">
+                                        Login
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
